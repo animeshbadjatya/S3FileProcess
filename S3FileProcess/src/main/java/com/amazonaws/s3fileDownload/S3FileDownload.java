@@ -90,8 +90,13 @@ public class S3FileDownload {
 
 					switch (columnIndex) {
 					case 0:
+						
 						int id = (int) nextCell.getNumericCellValue();
+						if (validate(id,amazonRDS)) {
 						statement.setInt(1, id);
+						}else {
+							System.out.println("Record Already present");
+						}
 						break;
 					case 1:
 						String name = nextCell.getStringCellValue();
@@ -125,7 +130,6 @@ public class S3FileDownload {
 
 			wb.close();
 			input.close();
-
 			connection.commit();
 			connection.close();
 
@@ -142,6 +146,13 @@ public class S3FileDownload {
 			e.printStackTrace();
 
 		}
+	}
+
+	private boolean validate(int id, AmazonRDS amazonRDS) {
+		boolean return_id = false;
+		
+		
+		return return_id;
 	}
 
 	public void download(String bucketName, String key, AmazonS3 s3, AmazonRDS amazonRDS)
